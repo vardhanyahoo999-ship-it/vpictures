@@ -5,8 +5,9 @@ const videos = [
     driveLink: "https://drive.google.com/drive/folders/1ddRx59ZSbD5_w5w0QG35_k-uC5r1lNKK"
   },
   {
-    title: "Birthday Function",
-    thumbnail: "thumbnails/video2.jpg",
-    driveLink: "https://drive.google.com/file/d/FILE_ID_2/view"
+    title: "THE RAJASAAB",
+    thumbnail: "thumbnails/rajasaab.jpg",
+    driveLink: "https://drive.google.com/file/d/1IgxpZ4WBFYmHNzLUfjkKsEt805KMURmf/view?usp=drive_link"
   }
 ];
+
