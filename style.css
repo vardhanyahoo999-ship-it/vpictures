@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 10px;
+  font-family: system-ui, Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+/* ===== PIN SCREEN ===== */
+#lock {
+  max-width: 320px;
+  margin: 120px auto;
+  text-align: center;
+}
+
+#lock h1 {
+  font-size: 22px;
+}
+
+#lock input {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  margin-top: 12px;
+}
+
+#lock button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  font-size: 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+#error {
+  color: red;
+  margin-top: 8px;
+}
+
+/* ===== GALLERY ===== */
+h1 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* EXACTLY 2 COLUMNS */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  display: block;
+}
+
+/* TITLE BELOW IMAGE */
+.title {
+  font-size: 14px;
+  text-align: center;
+  padding: 6px 4px;
+  font-weight: 500;
+}
+
+/* BUTTONS */
+.actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px;
+}
+
+.actions a {
+  font-size: 13px;
+  padding: 6px 8px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}

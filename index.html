@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- REQUIRED for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Family Videos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock">
+  <h1>Enter PIN</h1>
+  <input type="password" id="pinInput" placeholder="4-digit PIN" inputmode="numeric">
+  <button onclick="checkPin()">Unlock</button>
+  <p id="error"></p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="content" style="display:none;">
+  <h1>Family Videos</h1>
+  <div id="grid"></div>
+</div>
+
+<script src="videos.js"></script>
+
+<script>
+  /* ===== CONFIG ===== */
+  const PIN = "9951";   // 🔐 CHANGE THIS
+  /* ================== */
+
+  // Auto-unlock if already entered once
+  if (localStorage.getItem("unlocked") === "yes") {
+    unlock();
+  }
+
+  function checkPin() {
+    const entered = document.getElementById("pinInput").value;
+    if (entered === PIN) {
+      localStorage.setItem("unlocked", "yes");
+      unlock();
+    } else {
+      document.getElementById("error").innerText = "Wrong PIN";
+    }
+  }
+
+  function unlock() {
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("content").style.display = "block";
+    loadVideos();
+  }
+
+  function loadVideos() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    videos.forEach(v => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <a href="${v.driveLink}" target="_blank">
+          <img src="${v.thumbnail}" alt="${v.title}">
+        </a>
+        <div class="title">${v.title}</div>
+        <div class="actions">
+          <a href="${v.driveLink}" target="_blank">▶ Play</a>
+          <a href="${v.driveLink}" target="_blank">⬇ Download</a>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  }
+</script>
+
+</body>
+</html>
