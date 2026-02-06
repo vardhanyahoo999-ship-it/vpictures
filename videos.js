@@ -7,7 +7,8 @@ const videos = [
   {
     title: "THE RAJASAAB",
     thumbnail: "thumbnails/rajasaab.jpg",
-    driveLink: "https://drive.google.com/file/d/1IgxpZ4WBFYmHNzLUfjkKsEt805KMURmf/view?usp=drive_link"
+    driveLink: "https://drive.google.com/drive/folders/1QjQXrk9g9Zu4l7d-WCLyTo88AIqyusgv?usp=drive_link"
   }
 ];
+
 
