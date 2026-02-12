@@ -2,40 +2,292 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- REQUIRED for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPICTURES | Ultra Premium Streaming</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
 
-  <title>VPICTURES STREAMING PLATFORM</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* 1. ARCHITECTURAL FOUNDATION */
+    :root {
+      --primary: #e50914;
+      --bg: #050505;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-dim: rgba(255, 255, 255, 0.6);
+      --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 2. DYNAMIC CINEMATIC BACKGROUND */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -10%; left: -10%; width: 120%; height: 120%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(229, 9, 20, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(0, 113, 227, 0.05) 0%, transparent 40%);
+      z-index: -1;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    /* 3. PREMIUM NAVIGATION */
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      padding: 1.5rem 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(5, 5, 5, 0.7);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: var(--primary);
+      text-transform: uppercase;
+      text-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+    }
+
+    /* 4. LAYOUT CONTAINERS */
+    main { padding: 140px 6% 100px; }
+
+    .hero-title {
+      margin-bottom: 3rem;
+    }
+
+    .hero-title h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, #fff, var(--text-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* 5. CINEMATIC GRID & CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      transition: var(--ease) 0.5s;
+      cursor: pointer;
+      perspective: 1000px; /* For 3D Tilt effect */
+    }
+
+    .card:hover {
+      transform: translateY(-15px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    }
+
+    .thumb-area {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 23px 23px 0 0;
+      overflow: hidden;
+    }
+
+    .thumb-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease);
+    }
+
+    .card:hover img {
+      transform: scale(1.1);
+    }
+
+    /* 6. INTERACTIVE OVERLAY */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .card:hover .overlay { opacity: 1; }
+
+    /* Floating Play Button Icon */
+    .play-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 64px; height: 64px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center; justify-content: center;
+      opacity: 0;
+      transition: all 0.4s var(--ease);
+    }
+
+    .card:hover .play-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* 7. CARD DETAILS */
+    .card-footer {
+      padding: 20px 25px 25px;
+    }
+
+    .title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-play {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn-play:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+    }
+
+    .btn-dl {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: #fff;
+    }
+
+    .btn-dl:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Custom scrollbar for premium feel */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+  </style>
 </head>
 <body>
 
-<h1>VPICTURES STREAMING PLATFORM</h1>
+<header>
+  <div class="logo">VPICTURES</div>
+  <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-dim);">PREMIUM MEMBER ACCESS</div>
+</header>
 
-<div id="grid"></div>
+<main>
+  <div class="hero-title">
+    <h1><span>The Future of</span><br>Streaming Experience</h1>
+  </div>
+
+  <div id="grid" class="grid"></div>
+</main>
 
 <script src="videos.js"></script>
-
 <script>
-  const grid = document.getElementById("grid");
+  // Advanced Grid Rendering
+  const gridContainer = document.getElementById("grid");
 
-  videos.forEach(v => {
+  // Fallback for demo if videos.js isn't found
+  const videoData = typeof videos !== 'undefined' ? videos : [
+    { title: "Inception 4K", thumbnail: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80", driveLink: "#" },
+    { title: "Interstellar Ultra", thumbnail: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=800&q=80", driveLink: "#" },
+    { title: "Cyberpunk 2077", thumbnail: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80", driveLink: "#" }
+  ];
+
+  videoData.forEach(v => {
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <a href="${v.driveLink}" target="_blank">
-        <img src="${v.thumbnail}" alt="${v.title}">
-      </a>
-      <div class="title">${v.title}</div>
-      <div class="actions">
-        <a href="${v.driveLink}" target="_blank">▶ Play</a>
-        <a href="${v.driveLink}" target="_blank">⬇ Download</a>
+      <div class="thumb-area">
+        <img src="${v.thumbnail}" alt="${v.title}" loading="lazy">
+        <div class="play-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="overlay"></div>
+      </div>
+      <div class="card-footer">
+        <div class="title">${v.title}</div>
+        <div class="btn-group">
+          <a href="${v.driveLink}" target="_blank" class="btn btn-play">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            WATCH
+          </a>
+          <a href="${v.driveLink}" target="_blank" class="btn btn-dl">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            OFFLINE
+          </a>
+        </div>
       </div>
     `;
 
-    grid.appendChild(card);
+    gridContainer.appendChild(card);
+  });
+
+  // Subtle Mouse Tracking Effect for the Grid
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    document.body.style.setProperty('--mouse-x', x);
+    document.body.style.setProperty('--mouse-y', y);
   });
 </script>
 
